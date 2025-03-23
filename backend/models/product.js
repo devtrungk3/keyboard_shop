@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const {DataTypes} = require('sequelize');
 const sequelize = require('../database');
 
 const Product = sequelize.define('Product', {
@@ -37,8 +37,8 @@ const Product = sequelize.define('Product', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'brands',
-          key: 'brandId'
+            model: 'brands',
+            key: 'brandId'
         }
     }
 }, {
