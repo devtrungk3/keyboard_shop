@@ -11,7 +11,13 @@ const handleErrorResponse = (res, error, message) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+        const products = await Product.findAll({
+            include: {
+                model: Brand,
+                as: "brands",
+                attributes: ['brandName'],
+            }
+        });
         res.status(200).json({
             message: "All products",
             data: products,
@@ -22,6 +28,6 @@ const getAllProducts = async (req, res) => {
 }
 
 const addNewProduct = async (req, res) => {
-    const {productName, description,price,quantity,imageUrl} = req.body;
+    const {productName, description, price, quantity, imageUrl} = req.body;
 
 }

@@ -1,26 +1,28 @@
 const express = require("express");
-require("dotenv").config();
-const {sequelize, Account, Brand, Product} = require("./models");
-const brandRoutes = require("./routes/brand");
+require('dotenv').config();
+const {sequelize, Account, Brand, Product} = require('./models');
+const router = require('./routes')
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(router);
 
-
-app.get("/", (req, res) => {
-    res.send("Hello World");
+// global error handler
+app.use((err, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+    return res.status(statusCode).json({message: err.message});
 });
 
-app.use("/brands", brandRoutes);
-
+// Sync database and start server
 async function startServer() {
     try {
         await sequelize.authenticate();
         console.log("Database connection established successfully");
 
-        await sequelize.sync({force: false});
+        // Sync all models with database
+        await sequelize.sync({force: false}); // force: true drops table if it exists
         console.log("Database synced successfully");
 
         app.listen(PORT, () => {
