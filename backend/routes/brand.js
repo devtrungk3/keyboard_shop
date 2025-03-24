@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const brandController = require('../controllers/brandController');
+const brandController = require('../controllers/brand');
 
 
 router.post("/create", brandController.addNewBrand);

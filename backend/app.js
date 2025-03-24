@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const {sequelize, Account, Brand, Product} = require("./models");
-const brandRoutes = require("./routes/brandRoutes");
+const brandRoutes = require("./routes/brand");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
