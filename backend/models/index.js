@@ -4,19 +4,21 @@ const Brand = require('./brand');
 const Product = require('./product');
 
 Brand.hasMany(Product, {
-  foreignKey: 'brandId',
-  as: 'products'
+    foreignKey: 'brandId',
+    as: 'products',
+    onDelete: 'CASCADE',
+    hooks: true
 });
 
 Product.belongsTo(Brand, {
-  foreignKey: 'brandId',
-  as: 'brands'
+    foreignKey: 'brandId',
+    as: 'brands'
 });
 
 
 module.exports = {
-  sequelize,
-  Account,
-  Brand,
-  Product,
+    sequelize,
+    Account,
+    Brand,
+    Product,
 };

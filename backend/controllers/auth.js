@@ -1,4 +1,4 @@
-const { Account } = require('../models');
+const {Account} = require('../models');
 const jwtUtil = require('../jwtUtil');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
@@ -8,7 +8,7 @@ const loginController = asyncHandler(async (req, res) => {
     
     // get account information from database
     const account = await Account.findOne({
-        where: { username, password },
+        where: {username, password},
         attributes: ['accountId', 'username', 'role'],
     });
 
@@ -31,7 +31,7 @@ const signupController = asyncHandler(async (req, res) => {
     const role = "user";
 
     // check data exists in database
-    const accountExists = await Account.findOne({ where: { username: username } });
+    const accountExists = await Account.findOne({where: {username: username}});
     if (accountExists) {
         res.status(409);
         throw new Error('Username already in use');
@@ -48,7 +48,7 @@ const signupController = asyncHandler(async (req, res) => {
     });
 
     const account = await Account.findOne({
-        where: { username },
+        where: {username},
         attributes: ['accountId', 'username', 'role'],
     });
 
@@ -60,8 +60,8 @@ const signupController = asyncHandler(async (req, res) => {
         username: account.username,
         role: account.role
     });
-    
-    res.json({accessToken}); 
+
+    res.json({accessToken});
 });
 
-module.exports = { loginController, signupController };
+module.exports = {loginController, signupController};

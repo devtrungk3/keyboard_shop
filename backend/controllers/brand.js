@@ -8,7 +8,7 @@ const handleErrorResponse = (res, error, message) => {
     });
 };
 
-const getAllBrand = async (req, res) => {
+const getAllBrands = async (req, res) => {
     try {
         const brands = await Brand.findAll();
         res.status(200).json({
@@ -36,8 +36,8 @@ const addNewBrand = async (req, res) => {
         }
 
         res.status(201).json({
-            message: "Brand created successfully",
-            brand: newBrand,
+            message: "Brand added successfully",
+            data: newBrand,
         });
 
     } catch (error) {
@@ -60,7 +60,7 @@ const updateBrand = async (req, res) => {
 
         res.status(200).json({
             message: "Brand updated successfully",
-            brand,
+            data: brand,
         });
     } catch (error) {
         handleErrorResponse(res, error, "Error updating brand");
@@ -78,7 +78,7 @@ const deleteBrand = async (req, res) => {
         await brand.destroy();
         res.status(200).json({
             message: "Brand deleted successfully",
-            brand,
+            data: brand,
         });
     } catch (error) {
         handleErrorResponse(res, error, "Error deleting brand");
@@ -86,7 +86,7 @@ const deleteBrand = async (req, res) => {
 };
 
 module.exports = {
-    getAllBrand,
+    getAllBrands,
     addNewBrand,
     updateBrand,
     deleteBrand,

@@ -20,7 +20,6 @@ async function startServer() {
     try {
         await sequelize.authenticate();
         console.log("Database connection established successfully");
-
         // Sync all models with database
         await sequelize.sync({force: false}); // force: true drops table if it exists
         console.log("Database synced successfully");
