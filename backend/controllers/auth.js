@@ -8,15 +8,20 @@ const loginController = asyncHandler(async (req, res) => {
     
     // get account information from database
     const account = await Account.findOne({
-        where: { username, password },
+        where: { username },
         attributes: ['accountId', 'username', 'password', 'role'],
     });
 
     // check wrong credentials
-    const match = await bcrypt.compare(password, account.password);
-    if (!account || !match) {
+    if (!account) {
         res.status(401);
         throw new Error('Username or password is wrong');
+    } else {
+        const match = await bcrypt.compare(password, account.password);
+        if (!match) {
+            res.status(401);
+            throw new Error('Username or password is wrong');
+        }
     }
     
     // create new access token using credentials
