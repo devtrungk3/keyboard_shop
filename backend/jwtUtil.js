@@ -13,4 +13,4 @@ const generateAccessToken = (payload) => {
     );
 }
 
-module.exports = { generateAccessToken }
+module.exports = {generateAccessToken}

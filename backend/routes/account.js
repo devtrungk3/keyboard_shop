@@ -3,6 +3,6 @@ const router = express.Router();
 const { verifyJWT } = require('../middlewares');
 const { getInfo } = require('../controllers');
 
-router.get('/', verifyJWT, getInfo);
+router.get('/',  getInfo);
 
 module.exports = router;
