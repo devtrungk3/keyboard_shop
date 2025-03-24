@@ -1,13 +1,20 @@
 const express = require("express");
 require('dotenv').config();
 const { sequelize, Account, Brand, Product } = require('./models');
+const router = require('./routes')
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.use("/", (req, res) => {
-  res.send("hello world");
+app.use(router);
+
+// global error handler 
+app.use((err, req, res, next) => {
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  return res.status(statusCode).json({ message: err.message });
 });
+
 // Sync database and start server
 async function startServer() {
   try {
@@ -15,7 +22,7 @@ async function startServer() {
     console.log("Database connection established successfully");
 
     // Sync all models with database
-    await sequelize.sync({ force: true }); // force: true drops table if it exists
+    await sequelize.sync({ force: false }); // force: true drops table if it exists
     console.log("Database synced successfully");
 
     app.listen(PORT, () => {
