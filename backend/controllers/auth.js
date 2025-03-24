@@ -6,17 +6,22 @@ const bcrypt = require('bcrypt');
 const loginController = asyncHandler(async (req, res) => {
     const {username, password} = req.body;
     
+    // hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // get account information from database
     const account = await Account.findOne({
-        where: { username, password },
-        attributes: ['accountId', 'username', 'role'],
+        where: { username },
+        attributes: ['accountId', 'username', 'password', 'role'],
     });
 
     // check wrong credentials
-    if (!account) {
+    const match = await bcrypt.compare(password, account.password);
+    if (!account || !match) {
         res.status(401);
         throw new Error('Username or password is wrong');
     }
+    
     // create new access token using credentials
     const accessToken = jwtUtil.generateAccessToken({
         accountId: account.accountId,
