@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const authValidation = asyncHandler(async (req, res, next) => {
-    const { username , password } = req.body;
+    const {username, password} = req.body;
 
     // check missing data
     if (!username) {
@@ -29,7 +29,6 @@ const authValidation = asyncHandler(async (req, res, next) => {
         res.status(400);
         throw new Error('Password must follow specified format a-z, A-Z, 0-9, !@#$%^&*()_+=-.');
     }
-
     next();
 })
 
