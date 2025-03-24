@@ -9,7 +9,7 @@ const loginController = asyncHandler(async (req, res) => {
     // get account information from database
     const account = await Account.findOne({
         where: { username, password },
-        attributes: ['accountId', 'username', 'role'],
+        attributes: ['accountId', 'username', 'password', 'role'],
     });
 
     // check wrong credentials
