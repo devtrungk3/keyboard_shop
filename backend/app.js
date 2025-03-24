@@ -17,19 +17,20 @@ app.use((err, req, res, next) => {
 
 // Sync database and start server
 async function startServer() {
-  try {
-    await sequelize.authenticate();
-    console.log("Database connection established successfully");
+    try {
+        await sequelize.authenticate();
+        console.log("Database connection established successfully");
 
     // Sync all models with database
     await sequelize.sync({ force: false }); // force: true drops table if it exists
     console.log("Database synced successfully");
 
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Unable to connect to the database:", error);
+    }
 }
+
 startServer();
