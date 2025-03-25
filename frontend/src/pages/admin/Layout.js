@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import Product from './Product';
-import Brand from './Brand';
+import Product from './product/Product';
+import Brand from './brand/Brand';
 
 const Layout = ({activePage, setActivePage}) => {
     const renderContent = () => {
@@ -54,6 +54,5 @@ const Layout = ({activePage, setActivePage}) => {
         </div>
     );
 };
-
 
 export default Layout;
