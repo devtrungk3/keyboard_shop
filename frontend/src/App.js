@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Login from './pages/Login';
+import Layout from './pages/admin/Layout';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [activePage, setActivePage] = useState('home');
+    //
+    // const handleLogin = () => {
+    //     setIsLoggedIn(true);
+    // };
+    //
+    // const handleLogout = () => {
+    //     setIsLoggedIn(false);
+    //     setActivePage('home');
+    // };
+    //
+    // return (
+    //     <div>
+    //         {isLoggedIn ? (
+    //             <Layout activePage={activePage} setActivePage={setActivePage} onLogout={handleLogout}/>
+    //         ) : (
+    //             <Login onLogin={handleLogin}/>
+    //         )}
+    //     </div>
+    // );
+    return (
+        <Layout activePage={activePage} setActivePage={setActivePage}/>
+    )
+
 }
 
 export default App;

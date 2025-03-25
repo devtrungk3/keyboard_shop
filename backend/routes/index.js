@@ -11,6 +11,7 @@ const productRouter = require('./product');
 router.use('/auth', authRouter);
 router.use('/account', verifyJWT, accountRouter);
 router.use('/brand', verifyJWT, brandRouter);
-router.use('/product', verifyJWT, productRouter);
+// router.use('/product', verifyJWT, productRouter);
+router.use('/product', productRouter);
 
 module.exports = router;
