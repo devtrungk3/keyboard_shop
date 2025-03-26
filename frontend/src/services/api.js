@@ -61,7 +61,6 @@ export const loginUser = async (username, password) => {
             username,
             password,
         });
-        console.log(response.data);
 
         return response.data;
     } catch (error) {
@@ -75,6 +74,25 @@ export const loginUser = async (username, password) => {
             throw new Error('No response from server');
         } else {
             // Something happened in setting up the request
+            throw new Error('Error setting up the request');
+        }
+    }
+};
+
+export const signupUser = async (username, password) => {
+    try {
+        const response = await api.post('/auth/signup', {
+            username,
+            password,
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            throw new Error(error.response.data.message || 'Signup failed');
+        } else if (error.request) {
+            throw new Error('No response from server');
+        } else {
             throw new Error('Error setting up the request');
         }
     }
