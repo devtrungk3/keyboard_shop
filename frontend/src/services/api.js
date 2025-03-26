@@ -31,3 +31,22 @@ export const loginUser = async (username, password) => {
     }
   }
 };
+
+export const signupUser = async (username, password) => {
+  try {
+    const response = await api.post('/auth/signup', {
+      username,
+      password,
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data.message || 'Signup failed');
+    } else if (error.request) {
+      throw new Error('No response from server');
+    } else {
+      throw new Error('Error setting up the request');
+    }
+  }
+};

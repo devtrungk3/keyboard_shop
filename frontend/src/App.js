@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
+import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
@@ -17,9 +18,17 @@ function App() {
           }
         />
         <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
+        <Route
           path="/welcome"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['user', 'admin']}>
               <Welcome />
             </ProtectedRoute>
           }

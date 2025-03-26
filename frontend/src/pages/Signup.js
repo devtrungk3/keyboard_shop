@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { loginUser } from '../services/api';
+import { signupUser } from '../services/api';
 import '../styles/Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,9 +15,9 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-  
+
     try {
-      const data = await loginUser(username, password);
+      const data = await signupUser(username, password);
       localStorage.setItem('accessToken', data.accessToken);
       navigate('/welcome');
     } catch (err) {
@@ -33,8 +33,8 @@ const Login = () => {
         <div className="col-md-6 col-lg-4 mx-auto">
           <div className="login-card">
             <div className="card-body p-4">
-              <h2 className="login-title">Welcome Back</h2>
-              
+              <h2 className="login-title">Create Account</h2>
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-4 position-relative">
                   <div className="input-group">
@@ -83,13 +83,13 @@ const Login = () => {
                   {loading ? (
                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                   ) : null}
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? 'Signing up...' : 'Sign Up'}
                 </button>
 
                 <div className="text-center login-link-container">
-                  <span>Don't have an account? </span>
-                  <a href="/signup" className="login-link">
-                    Sign Up
+                  <span>Already have an account? </span>
+                  <a href="/login" className="login-link">
+                    Login
                   </a>
                 </div>
               </form>
@@ -101,4 +101,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
