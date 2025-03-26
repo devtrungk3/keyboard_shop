@@ -1,6 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
+import Layout from './pages/admin/Layout';
+import Product from './pages/admin/product/Product';
+import Brand from './pages/admin/brand/Brand';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
@@ -12,7 +15,7 @@ function App() {
                     path="/login"
                     element={
                         <PublicRoute>
-                            <Login />
+                            <Login/>
                         </PublicRoute>
                     }
                 />
@@ -20,11 +23,25 @@ function App() {
                     path="/welcome"
                     element={
                         <ProtectedRoute>
-                            <Welcome />
+                            <Welcome/>
                         </ProtectedRoute>
                     }
                 />
-                <Route path="*" element={<Navigate to="/welcome" replace />} />
+
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute>
+                            <Layout/>
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route index element={<Navigate to="/admin/product" replace/>}/>
+                    <Route path="product" element={<Product/>}/>
+                    <Route path="brand" element={<Brand/>}/>
+                </Route>
+                <Route path="*" element={<Navigate to="/welcome" replace/>}/>
+
             </Routes>
         </BrowserRouter>
     );
@@ -32,6 +49,3 @@ function App() {
 
 export default App;
 
-// return (
-//     <Layout activePage={activePage} setActivePage={setActivePage}/>
-// )

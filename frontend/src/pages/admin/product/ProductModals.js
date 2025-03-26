@@ -1,6 +1,6 @@
-// src/pages/brand/product/ProductModals.jsx
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {formatPrice} from './utils/formatPrice';
+
 
 const ViewProductModal = ({product, onClose}) => {
     if (!product) return null;
@@ -26,6 +26,7 @@ const ViewProductModal = ({product, onClose}) => {
                             aria-label="Close"
                         ></button>
                     </div>
+
                     <div className="modal-body p-4">
                         <div className="row g-4">
                             <div className="col-md-5">
@@ -64,6 +65,7 @@ const ViewProductModal = ({product, onClose}) => {
                             </div>
                         </div>
                     </div>
+                    {/* Nút đóng modal */}
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                             Đóng
@@ -76,8 +78,7 @@ const ViewProductModal = ({product, onClose}) => {
 };
 
 const AddProductModal = ({onClose, onSubmit, show}) => {
-    // Khai báo Hook ở cấp cao nhất, trước mọi điều kiện
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = useState({
         productName: '',
         brandId: '',
         price: '',
@@ -110,6 +111,7 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-content shadow-lg border-0">
+                    {/* Tiêu đề modal */}
                     <div className="modal-header bg-success text-white">
                         <h5 className="modal-title">Thêm sản phẩm mới</h5>
                         <button
@@ -206,6 +208,7 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                 </div>
                             </div>
                         </div>
+                        {/* Nút hành động */}
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                                 Hủy
@@ -221,8 +224,9 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
     );
 };
 
+
 const EditProductModal = ({product, onClose, onSubmit}) => {
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = useState({
         productName: product?.productName || '',
         brandId: product?.brands?.brandId || '',
         price: product?.price || '',
