@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useState} from 'react';
 import Login from './pages/Login';
 import Layout from './pages/admin/Layout';
@@ -30,6 +31,38 @@ function App() {
         <Layout activePage={activePage} setActivePage={setActivePage}/>
     )
 
+=======
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Welcome from './pages/Welcome';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/welcome"
+          element={
+            <ProtectedRoute>
+              <Welcome />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/welcome" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+>>>>>>> 095f912e7db7c3f4026ea0ea198797694e33cf97
 }
 
 export default App;
