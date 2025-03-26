@@ -25,7 +25,7 @@ const ProductList = ({products, onView, onEdit, onDelete}) => {
                     >
                         <td className="ps-4">{index + 1}</td>
                         <td>{product.productName}</td>
-                        <td>{product.brands.brandName}</td>
+                        <td>{product.brands && product.brands.brandName ? product.brands.brandName : 'Không có'}</td>
                         <td>{formatPrice(product.price)}</td>
                         <td>
                                 <span

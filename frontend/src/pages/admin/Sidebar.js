@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-
 const Sidebar = () => {
     return (
         <div
@@ -13,7 +12,7 @@ const Sidebar = () => {
                 className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
             >
                 <i className="bi bi-gear-fill me-2 fs-4"></i>
-                <span className="fs-4">Admin Panel</span>
+                <span className="fs-4">Admin</span>
             </a>
             <hr className="border-light"/>
             <ul className="nav nav-pills flex-column mb-auto">

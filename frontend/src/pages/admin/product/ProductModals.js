@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {formatPrice} from './utils/formatPrice';
 
-
 const ViewProductModal = ({product, onClose}) => {
     if (!product) return null;
 
@@ -26,7 +25,6 @@ const ViewProductModal = ({product, onClose}) => {
                             aria-label="Close"
                         ></button>
                     </div>
-
                     <div className="modal-body p-4">
                         <div className="row g-4">
                             <div className="col-md-5">
@@ -65,7 +63,6 @@ const ViewProductModal = ({product, onClose}) => {
                             </div>
                         </div>
                     </div>
-                    {/* Nút đóng modal */}
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                             Đóng
@@ -77,7 +74,7 @@ const ViewProductModal = ({product, onClose}) => {
     );
 };
 
-const AddProductModal = ({onClose, onSubmit, show}) => {
+const AddProductModal = ({onClose, onSubmit, show, brands, isAdding}) => {
     const [formData, setFormData] = useState({
         productName: '',
         brandId: '',
@@ -111,7 +108,6 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-content shadow-lg border-0">
-                    {/* Tiêu đề modal */}
                     <div className="modal-header bg-success text-white">
                         <h5 className="modal-title">Thêm sản phẩm mới</h5>
                         <button
@@ -136,21 +132,29 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                         value={formData.productName}
                                         onChange={handleChange}
                                         required
+                                        disabled={isAdding}
                                     />
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="brandId" className="form-label">
-                                        Thương hiệu (ID)
+                                        Thương hiệu
                                     </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
+                                    <select
+                                        className="form-select"
                                         id="brandId"
                                         name="brandId"
                                         value={formData.brandId}
                                         onChange={handleChange}
                                         required
-                                    />
+                                        disabled={isAdding}
+                                    >
+                                        <option value="">Chọn thương hiệu</option>
+                                        {brands.map((brand) => (
+                                            <option key={brand.brandId} value={brand.brandId}>
+                                                {brand.brandName}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="price" className="form-label">
@@ -164,6 +168,7 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                         value={formData.price}
                                         onChange={handleChange}
                                         required
+                                        disabled={isAdding}
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -178,6 +183,7 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                         value={formData.quantity}
                                         onChange={handleChange}
                                         required
+                                        disabled={isAdding}
                                     />
                                 </div>
                                 <div className="col-12">
@@ -191,6 +197,7 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                         value={formData.description}
                                         onChange={handleChange}
                                         rows="3"
+                                        disabled={isAdding}
                                     ></textarea>
                                 </div>
                                 <div className="col-12">
@@ -204,17 +211,33 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
                                         name="imageUrl"
                                         value={formData.imageUrl}
                                         onChange={handleChange}
+                                        disabled={isAdding}
                                     />
                                 </div>
                             </div>
                         </div>
-                        {/* Nút hành động */}
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary"
+                                onClick={onClose}
+                                disabled={isAdding}
+                            >
                                 Hủy
                             </button>
-                            <button type="submit" className="btn btn-success">
-                                Thêm sản phẩm
+                            <button type="submit" className="btn btn-success" disabled={isAdding}>
+                                {isAdding ? (
+                                    <>
+                                        <span
+                                            className="spinner-border spinner-border-sm me-2"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                        Đang thêm...
+                                    </>
+                                ) : (
+                                    'Thêm sản phẩm'
+                                )}
                             </button>
                         </div>
                     </form>
@@ -224,16 +247,28 @@ const AddProductModal = ({onClose, onSubmit, show}) => {
     );
 };
 
-
-const EditProductModal = ({product, onClose, onSubmit}) => {
+const EditProductModal = ({product, onClose, onSubmit, brands, isEditing}) => {
     const [formData, setFormData] = useState({
-        productName: product?.productName || '',
-        brandId: product?.brands?.brandId || '',
-        price: product?.price || '',
-        quantity: product?.quantity || '',
-        description: product?.description || '',
-        imageUrl: product?.imageUrl || '',
+        productName: '',
+        brandId: '',
+        price: '',
+        quantity: '',
+        description: '',
+        imageUrl: '',
     });
+
+    useEffect(() => {
+        if (product) {
+            setFormData({
+                productName: product.productName || '',
+                brandId: product.brands?.brandId?.toString() || '',
+                price: product.price?.toString() || '',
+                quantity: product.quantity?.toString() || '',
+                description: product.description || '',
+                imageUrl: product.imageUrl || '',
+            });
+        }
+    }, [product]);
 
     if (!product) return null;
 
@@ -283,21 +318,29 @@ const EditProductModal = ({product, onClose, onSubmit}) => {
                                         value={formData.productName}
                                         onChange={handleChange}
                                         required
+                                        disabled={isEditing}
                                     />
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="brandId" className="form-label">
-                                        Thương hiệu (ID)
+                                        Thương hiệu
                                     </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
+                                    <select
+                                        className="form-select"
                                         id="brandId"
                                         name="brandId"
                                         value={formData.brandId}
                                         onChange={handleChange}
                                         required
-                                    />
+                                        disabled={isEditing}
+                                    >
+                                        <option value="">Chọn thương hiệu</option>
+                                        {brands.map((brand) => (
+                                            <option key={brand.brandId} value={brand.brandId}>
+                                                {brand.brandName}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="price" className="form-label">
@@ -311,6 +354,7 @@ const EditProductModal = ({product, onClose, onSubmit}) => {
                                         value={formData.price}
                                         onChange={handleChange}
                                         required
+                                        disabled={isEditing}
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -325,6 +369,7 @@ const EditProductModal = ({product, onClose, onSubmit}) => {
                                         value={formData.quantity}
                                         onChange={handleChange}
                                         required
+                                        disabled={isEditing}
                                     />
                                 </div>
                                 <div className="col-12">
@@ -338,6 +383,7 @@ const EditProductModal = ({product, onClose, onSubmit}) => {
                                         value={formData.description}
                                         onChange={handleChange}
                                         rows="3"
+                                        disabled={isEditing}
                                     ></textarea>
                                 </div>
                                 <div className="col-12">
@@ -351,16 +397,33 @@ const EditProductModal = ({product, onClose, onSubmit}) => {
                                         name="imageUrl"
                                         value={formData.imageUrl}
                                         onChange={handleChange}
+                                        disabled={isEditing}
                                     />
                                 </div>
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary"
+                                onClick={onClose}
+                                disabled={isEditing}
+                            >
                                 Hủy
                             </button>
-                            <button type="submit" className="btn btn-warning">
-                                Lưu thay đổi
+                            <button type="submit" className="btn btn-warning" disabled={isEditing}>
+                                {isEditing ? (
+                                    <>
+                                        <span
+                                            className="spinner-border spinner-border-sm me-2"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                        Đang sửa...
+                                    </>
+                                ) : (
+                                    'Lưu thay đổi'
+                                )}
                             </button>
                         </div>
                     </form>

@@ -36,12 +36,58 @@ export const getProducts = async () => {
     }
 };
 
+export const addProduct = async (product) => {
+    try {
+        const response = await api.post(`/product/create`, product, {
+            timeout: 5000,
+        })
+        return response.data;
+    } catch (error) {
+        console.error('API Error:', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+}
+export const updateProduct = async (productId, productData) => {
+    try {
+        const response = await api.put(`/product/${productId}`, productData, {
+            timeout: 5000,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('API Error (updateProduct):', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+};
+
+export const deleteProduct = async (productId) => {
+    try {
+        const response = await api.delete(`/product/${productId}`, {
+            timeout: 5000,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('API Error (deleteProduct):', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+};
 
 
 // --------------------------------brand-------------------------------------------------
 export const getBrands = async () => {
     try {
-        const response = await api.get(`/brands`, {
+        const response = await api.get(`/brand`, {
             timeout: 5000,
         });
         return response.data;
