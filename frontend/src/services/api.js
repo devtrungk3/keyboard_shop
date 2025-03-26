@@ -99,7 +99,59 @@ export const getBrands = async () => {
         });
         throw error;
     }
-}
+};
+
+export const addBrand = async (brand) => {
+    try {
+        const response = await api.post(`/brand/create`, brand, {
+            timeout: 5000,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('API Error:', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+};
+
+export const updateBrand = async (brandId, brandData) => {
+    try {
+        const response = await api.put(`/brand/${brandId}`, brandData, {
+            timeout: 5000,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('API Error (updateBrand):', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+};
+
+export const deleteBrand = async (brandId) => {
+    try {
+        const response = await api.delete(`/brand/${brandId}`, {
+            timeout: 5000,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('API Error (deleteBrand):', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw error;
+    }
+};
+
+
+
+// --------------------------------authen-------------------------------------------------
 
 export const loginUser = async (username, password) => {
     try {
