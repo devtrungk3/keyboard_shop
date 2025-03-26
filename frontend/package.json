@@ -10,10 +10,7 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-<<<<<<< HEAD
-=======
     "jwt-decode": "^4.0.0",
->>>>>>> 095f912e7db7c3f4026ea0ea198797694e33cf97
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
