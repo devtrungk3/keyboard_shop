@@ -49,7 +49,7 @@ const Product = () => {
     };
 
     const handleEditProduct = (product) => {
-        console.log('Sản phẩm được chọn để chỉnh sửa:', product); // Thêm log để kiểm tra dữ liệu
+        console.log('Sản phẩm được chọn để chỉnh sửa:', product);
         setModalState({
             viewProduct: null,
             showAddModal: false,
