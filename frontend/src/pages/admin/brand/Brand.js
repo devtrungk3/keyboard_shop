@@ -17,7 +17,6 @@ const Brand = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,13 +34,6 @@ const Brand = () => {
 
         fetchData();
     }, []);
-
-    const handleViewBrand = (brand) => {
-        setModalState({
-            showAddModal: false,
-            editBrand: null,
-        });
-    };
 
     const handleEditBrand = (brand) => {
         console.log('Thương hiệu được chọn để chỉnh sửa:', brand);
@@ -113,7 +105,6 @@ const Brand = () => {
         }
 
         try {
-            setIsDeleting(true);
             await deleteBrand(brandId);
             setBrands(brands.filter((brand) => brand.brandId !== brandId));
             setToastMessage('Xóa thương hiệu thành công!');
@@ -122,8 +113,6 @@ const Brand = () => {
             const message = err.response?.data?.message || err.message || 'Không thể xóa thương hiệu';
             setErrorMessage(message);
             setShowErrorToast(true);
-        } finally {
-            setIsDeleting(false);
         }
     };
 

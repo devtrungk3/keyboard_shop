@@ -19,7 +19,6 @@ const Product = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -160,7 +159,6 @@ const Product = () => {
         }
 
         try {
-            setIsDeleting(true);
             await deleteProduct(productId);
             setProducts(products.filter((product) => product.productId !== productId));
             setToastMessage('Xóa sản phẩm thành công!');
@@ -169,8 +167,6 @@ const Product = () => {
             const message = err.response?.data?.message || err.message || 'Không thể xóa sản phẩm';
             setErrorMessage(message);
             setShowErrorToast(true);
-        } finally {
-            setIsDeleting(false);
         }
     };
 
