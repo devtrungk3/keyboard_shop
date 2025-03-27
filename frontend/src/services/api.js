@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // Configure axios with a base URL (optional)
 const api = axios.create({
-    baseURL: 'http://localhost:8080', // Replace with your actual base URL
+    // baseURL: 'http://localhost:8080', // Replace with your actual base URL
+    baseURL: 'https://keyboard-shop-backend-6urf.onrender.com',
     headers: {
         'Content-Type': 'application/json',
     },

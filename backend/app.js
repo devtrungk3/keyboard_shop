@@ -29,7 +29,7 @@ async function startServer() {
         await sequelize.sync({force: false}); // force: true drops table if it exists
         console.log("Database synced successfully");
 
-        const adminExists = await Account.findOne({ where: { username: 'admin' } });
+        const adminExists = await Account.findOne({where: {username: 'admin'}});
         if (!adminExists) {
             await Account.create({
                 username: 'admin',
