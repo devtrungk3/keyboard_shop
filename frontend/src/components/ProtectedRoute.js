@@ -13,7 +13,7 @@ function ProtectedRoute({ children, allowedRoles }) {
     }
     if (allowedRoles && !allowedRoles.includes(role)) {
       // Redirect to a default page based on role if access is denied
-      return <Navigate to={role === 'admin' ? '/admin/users' : '/welcome'} replace />;
+      return <Navigate to={role === 'admin' ? '/admin' : '/welcome'} replace />;
     }
   }
   
