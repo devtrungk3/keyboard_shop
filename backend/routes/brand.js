@@ -7,5 +7,6 @@ router.post("/create", brandController.addNewBrand);
 router.get("/", brandController.getAllBrands);
 router.put("/:id", brandController.updateBrand);
 router.delete("/:id", brandController.deleteBrand);
-module.exports = router;
+router.get("/search", brandController.searchBrandsByName);
 
+module.exports = router;

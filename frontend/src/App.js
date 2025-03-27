@@ -7,6 +7,8 @@ import Brand from './pages/admin/brand/Brand';
 import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
     return (

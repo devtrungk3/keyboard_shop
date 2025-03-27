@@ -1,4 +1,5 @@
 const Brand = require("../models/brand");
+const { Op } = require("sequelize"); // Import Sequelize operators
 
 const handleErrorResponse = (res, error, message) => {
     console.error(`${message}:`, error);
@@ -21,12 +22,12 @@ const getAllBrands = async (req, res) => {
 };
 
 const addNewBrand = async (req, res) => {
-    const {brandName, description} = req.body;
+    const { brandName, description } = req.body;
 
     try {
         const [newBrand, created] = await Brand.findOrCreate({
-            where: {brandName},
-            defaults: {brandName, description},
+            where: { brandName },
+            defaults: { brandName, description },
         });
 
         if (!created) {
@@ -39,20 +40,19 @@ const addNewBrand = async (req, res) => {
             message: "Brand added successfully",
             data: newBrand,
         });
-
     } catch (error) {
         handleErrorResponse(res, error, "Error adding brand");
     }
 };
 
 const updateBrand = async (req, res) => {
-    const {id} = req.params;
-    const {brandName, description} = req.body;
+    const { id } = req.params;
+    const { brandName, description } = req.body;
 
     try {
         const brand = await Brand.findByPk(id);
         if (!brand) {
-            return res.status(404).json({message: "Brand not found"});
+            return res.status(404).json({ message: "Brand not found" });
         }
         brand.brandName = brandName;
         brand.description = description;
@@ -68,12 +68,12 @@ const updateBrand = async (req, res) => {
 };
 
 const deleteBrand = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
     try {
         const brand = await Brand.findByPk(id);
         if (!brand) {
-            return res.status(404).json({message: "Brand not found"});
+            return res.status(404).json({ message: "Brand not found" });
         }
         await brand.destroy();
         res.status(200).json({
@@ -85,9 +85,38 @@ const deleteBrand = async (req, res) => {
     }
 };
 
+
+const searchBrandsByName = async (req, res) => {
+    const { name } = req.query;
+
+    if (!name) {
+        return res.status(400).json({
+            message: "Search term 'name' is required",
+        });
+    }
+
+    try {
+        const brands = await Brand.findAll({
+            where: {
+                brandName: {
+                    [Op.iLike]: `%${name}%`,
+                },
+            },
+        });
+
+        res.status(200).json({
+            message: `Brands matching '${name}'`,
+            data: brands,
+        });
+    } catch (error) {
+        handleErrorResponse(res, error, "Error searching brands");
+    }
+};
+
 module.exports = {
     getAllBrands,
     addNewBrand,
     updateBrand,
     deleteBrand,
+    searchBrandsByName,
 };

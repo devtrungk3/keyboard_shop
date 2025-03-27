@@ -6,7 +6,7 @@ function PublicRoute({ children }) {
   if (token) {
     const { exp, role } = jwtDecode(token);
     if (exp * 1000 - Date.now() > 0) {
-      return <Navigate to={role === 'admin' ? '/admin/users' : '/welcome'} replace />;
+      return <Navigate to={role === 'admin' ? '/admin' : '/welcome'} replace />;
     }
   }
   return children;
