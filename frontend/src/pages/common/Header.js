@@ -48,12 +48,13 @@ function Header({ searchTerm, onSearch }) {
               />
             </Form>
 
-            <span className="text-light">{username}</span>
             {/* Hiển thị link Admin nếu role là 'admin' */}
-            {role === 'admin' && (
+            {role === 'admin' ? (
               <Nav.Link href="/admin" className="text-warning fw-bold">
                 Admin
               </Nav.Link>
+            ) : (
+              <span className="text-light fw-bold">{username}</span>
             )}
 
             <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
