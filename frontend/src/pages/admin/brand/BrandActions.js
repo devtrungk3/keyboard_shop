@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BrandActions = ({brand, onView, onEdit, onDelete}) => {
+const BrandActions = ({brand, onEdit, onDelete}) => {
     return (
         <div className="btn-group" role="group" aria-label="Brand actions">
             <button
