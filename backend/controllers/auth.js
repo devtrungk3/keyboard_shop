@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt');
 
 const loginController = asyncHandler(async (req, res) => {
     const {username, password} = req.body;
-    
+    const usernameLowercase = username.toLowerCase();
     // get account information from database
     const account = await Account.findOne({
-        where: { username },
+        where: { username: usernameLowercase },
         attributes: ['accountId', 'username', 'password', 'role'],
     });
 
@@ -36,9 +36,10 @@ const loginController = asyncHandler(async (req, res) => {
 const signupController = asyncHandler(async (req, res) => {
     const {username, password} = req.body;
     const role = "user";
+    const usernameLowercase = username.toLowerCase();
 
     // check data exists in database
-    const accountExists = await Account.findOne({where: {username: username}});
+    const accountExists = await Account.findOne({where: {username: usernameLowercase}});
     if (accountExists) {
         res.status(409);
         throw new Error('Username already in use');
@@ -49,13 +50,13 @@ const signupController = asyncHandler(async (req, res) => {
 
     // insert new records into users table
     await Account.create({
-        username,
+        username: usernameLowercase,
         password: hashedPassword,
         role,
     });
 
     const account = await Account.findOne({
-        where: {username},
+        where: {username: usernameLowercase},
         attributes: ['accountId', 'username', 'role'],
     });
 
