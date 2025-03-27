@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configure axios with a base URL (optional)
 const api = axios.create({
-    baseURL: 'http://localhost:8080', // Replace with your actual base URL
+    baseURL: process.env.REACT_APP_SERVER_URL, // Replace with your actual base URL
     headers: {
         'Content-Type': 'application/json',
     },
