@@ -4,6 +4,8 @@ import Footer from './common/Footer';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { getProducts } from '../services/api'; 
 import '../styles/App.css';
+import {formatPrice} from './admin/product/utils/formatPrice';
+
 
 function Welcome() {
   const [products, setProducts] = useState([]);
@@ -67,7 +69,7 @@ function Welcome() {
                     <Card.Body>
                       <Card.Title>{product.productName}</Card.Title>
                       <Card.Text><strong>Description:</strong> {product.description}</Card.Text>
-                      <Card.Text><strong>Price:</strong> ${product.price}</Card.Text>
+                      <Card.Text><strong>Price:</strong> {formatPrice(product.price)}</Card.Text>
                       <Card.Text><strong>Quantity:</strong> {product.quantity}</Card.Text>
                       <Card.Text><strong>Brand:</strong> {product.brands?.brandName || 'Unknown'}</Card.Text>
                     </Card.Body>
