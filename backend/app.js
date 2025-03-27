@@ -9,6 +9,9 @@ app.use(express.json());
 app.use(cors());
 const PORT = process.env.PORT || 3000;
 
+app.get('/helloworld', (req, res) => {
+    return res.json('hello world');
+});
 app.use(router);
 
 // global error handler

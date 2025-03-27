@@ -4,19 +4,23 @@ import { jwtDecode } from 'jwt-decode';
 
 function Header({ searchTerm, onSearch }) {
   const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUsername(decoded.username || 'Guest'); 
+        setUsername(decoded.username || 'Guest');
+        setRole(decoded.role || 'user'); // Mặc định là 'user' nếu không có role
       } catch (error) {
         console.error('Invalid token:', error);
         setUsername('Guest');
+        setRole('user');
       }
     } else {
       setUsername('Guest');
+      setRole('user');
     }
   }, []);
 
@@ -40,10 +44,18 @@ function Header({ searchTerm, onSearch }) {
                 className="me-2"
                 value={searchTerm}
                 onChange={(e) => onSearch(e.target.value)}
-                style={{ width: '300px' }} // Adjust width as needed
+                style={{ width: '300px' }}
               />
             </Form>
+
             <span className="text-light">{username}</span>
+            {/* Hiển thị link Admin nếu role là 'admin' */}
+            {role === 'admin' && (
+              <Nav.Link href="/admin" className="text-warning fw-bold">
+                Admin
+              </Nav.Link>
+            )}
+
             <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
               Log out
             </Nav.Link>
